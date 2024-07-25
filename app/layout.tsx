@@ -27,7 +27,7 @@ export default function RootLayout({
             <Link href="">Кабинет</Link>
           </nav>
         </header>
-        <main className="h-container mt-10 flex flex-col justify-between p-2">
+        <main className="h-container flex flex-col justify-between p-2">
           {children}
         </main>
       </body>
