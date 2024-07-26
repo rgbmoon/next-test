@@ -15,7 +15,7 @@ const RootLayout = ({
   return (
     <html lang="en">
       <body className={roboto.className}>
-        <header className="fixed top-0 h-12 w-full bg-white shadow">
+        <header className="fixed top-0 z-50 h-12 w-full bg-white shadow">
           <div className="container mx-auto flex items-center gap-2 p-2">
             <NextLink href="/">
               <Image
