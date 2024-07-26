@@ -13,8 +13,9 @@
     text-wrap: balance;
   }
   .h-container {
-    height: calc(100vh - theme('spacing.14'));
-    margin-top: theme('spacing.14');
+    /* exclude fixed header height */
+    min-height: calc(100vh - theme('spacing.12'));
+    margin-top: theme('spacing.12');
   }
 }
 
