@@ -13,7 +13,7 @@ export const Link: FC<PropsWithChildren<LinkProps>> = ({ href, children }) => {
 
   return (
     <NextLink
-      className={`rounded bg-slate-200 p-1 transition ease-in-out ${href === currPathname && 'bg-slate-400 text-white'}`}
+      className={`rounded bg-slate-200 p-1 transition ease-in-out hover:bg-slate-300 ${href === currPathname && 'bg-slate-400 text-white hover:bg-slate-500'}`}
       href={href}
     >
       {children}
