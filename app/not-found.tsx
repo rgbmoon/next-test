@@ -1,10 +1,15 @@
 import { Link } from '@/components/link'
 
-export default async function NotFound() {
+const NotFound = () => {
   return (
-    <div className="my-auto flex items-center justify-center gap-2 self-center">
-      <h1 className="text-4xl">404</h1>
-      <div className="">Page not found</div>
+    <div className="my-auto flex flex-col items-center justify-center gap-2 self-center">
+      <div className="flex items-center gap-2">
+        <h1 className="text-4xl">404</h1>
+        <div className="">Page not found</div>
+      </div>
+      <Link href="/">Home page</Link>
     </div>
   )
 }
+
+export default NotFound

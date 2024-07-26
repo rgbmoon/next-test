@@ -1,5 +1,5 @@
 import { Metadata } from 'next'
-import { ReactNode } from 'react'
+import { redirect } from 'next/navigation'
 
 export const metadata: Metadata = {
   title: 'Cabinet page title',
@@ -7,7 +7,10 @@ export const metadata: Metadata = {
 }
 
 const Cabinet = () => {
-  return <h1 className="text-4xl">Cabinet page</h1>
+  // finish redirect to profile
+  // redirect('cabinet/profile')
+
+  return <>User info</>
 }
 
 export default Cabinet

@@ -17,9 +17,15 @@ const RootLayout = ({
       <body className={roboto.className}>
         <header className="fixed top-0 h-12 w-full bg-white shadow">
           <div className="container mx-auto flex items-center gap-2 p-2">
-            <Image src="/next.svg" alt="Next.js Logo" width={120} height={24} />
+            <NextLink href="/">
+              <Image
+                src="/next.svg"
+                alt="Next.js Logo"
+                width={120}
+                height={24}
+              />
+            </NextLink>
             <nav className="ml-auto flex gap-2">
-              <Link href="/">Home</Link>
               <Link href="/cabinet">Cabinet</Link>
             </nav>
           </div>
