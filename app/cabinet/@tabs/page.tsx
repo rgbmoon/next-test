@@ -5,8 +5,8 @@ export const metadata: Metadata = {
   description: 'Cabinet page description',
 }
 
-const Cabinet = () => {
-  return null
+const CabinetTabProfile = () => {
+  return <div className="">Edit profile tab</div>
 }
 
-export default Cabinet
+export default CabinetTabProfile

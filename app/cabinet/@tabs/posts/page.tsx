@@ -5,12 +5,8 @@ export const metadata: Metadata = {
   description: 'Posts page description',
 }
 
-const Posts = () => {
-  return (
-    <div className="">
-      <h1>Posts page</h1>
-    </div>
-  )
+const CabinetTabPosts = () => {
+  return <div className="">Posts tab</div>
 }
 
-export default Posts
+export default CabinetTabPosts
