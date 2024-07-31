@@ -10,13 +10,15 @@ type FormData = {
 }
 
 const Login = () => {
-  const { register, handleSubmit } = useForm<FormData>()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>()
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
     // console.log(data)
   }
-
-  // TODO: finish hook form validation
 
   return (
     <form
@@ -24,12 +26,14 @@ const Login = () => {
       onSubmit={handleSubmit(onSubmit)}
     >
       <Input
-        label="Login"
         autoFocus
-        {...register('login', { required: true, minLength: 3 })}
+        label="Login"
+        errors={errors}
+        {...register('login', { required: true, minLength: 4 })}
       />
       <Input
         label="Password"
+        errors={errors}
         {...register('password', { required: true, minLength: 4 })}
       />
       <Button type="submit">Submit</Button>
