@@ -3,9 +3,10 @@
 import { Button } from '@/components/button'
 import { Input } from '@/components/input'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { userLogin } from './actions'
 
 type FormData = {
-  login: string
+  email: string
   password: string
 }
 
@@ -16,8 +17,8 @@ const Login = () => {
     formState: { errors },
   } = useForm<FormData>()
 
-  const onSubmit: SubmitHandler<FormData> = (data) => {
-    // console.log(data)
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
+    const response = await userLogin(data)
   }
 
   return (
@@ -29,11 +30,13 @@ const Login = () => {
         autoFocus
         label="Login"
         errors={errors}
-        {...register('login', { required: true, minLength: 4 })}
+        defaultValue="Vlad"
+        {...register('email', { required: true, minLength: 4 })}
       />
       <Input
         label="Password"
         errors={errors}
+        defaultValue="1234"
         {...register('password', { required: true, minLength: 4 })}
       />
       <Button type="submit">Submit</Button>
