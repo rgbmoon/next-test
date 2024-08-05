@@ -4,6 +4,8 @@ import { Button } from '@/components/button'
 import { Input } from '@/components/input'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { userLogin } from './actions'
+import { enqueueSnackbar } from 'notistack'
+import { API_URL } from '@/constants/constants'
 
 type FormData = {
   email: string
@@ -18,19 +20,23 @@ const Login = () => {
   } = useForm<FormData>()
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
-    const response = await userLogin(data)
+    try {
+      await userLogin(data)
+    } catch (error) {
+      enqueueSnackbar(error as string, { variant: 'error' })
+    }
   }
 
   return (
     <form
-      className="m-auto flex w-96 flex-col gap-4 rounded-lg border border-solid border-slate-100 p-2 shadow max-md:w-full"
+      className="m-auto flex w-96 flex-col gap-4 rounded-lg border border-solid border-slate-100 p-3 shadow max-md:w-full"
       onSubmit={handleSubmit(onSubmit)}
     >
       <Input
         autoFocus
         label="Login"
         errors={errors}
-        defaultValue="Vlad"
+        defaultValue="vlad@mail.ru"
         {...register('email', { required: true, minLength: 4 })}
       />
       <Input

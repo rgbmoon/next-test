@@ -1,4 +1,6 @@
 import { Metadata } from 'next'
+import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
 import { ReactNode } from 'react'
 
 export const metadata: Metadata = {
@@ -7,6 +9,10 @@ export const metadata: Metadata = {
 }
 
 const LoginLayout = ({ children }: { children: ReactNode }) => {
+  if (cookies().get('token')) {
+    redirect('/cabinet')
+  }
+
   return <>{children}</>
 }
 

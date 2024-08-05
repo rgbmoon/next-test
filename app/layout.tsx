@@ -4,6 +4,9 @@ import './globals.css'
 import { ReactNode } from 'react'
 import { Link } from '@/components/link'
 import NextLink from 'next/link'
+import { NotistackProvider } from '@/components/snackbar-provider'
+import { getAuthorized } from '@/utils/user'
+import { Button } from '@/components/button'
 
 const roboto = Roboto_Condensed({ subsets: ['latin', 'cyrillic'] })
 
@@ -12,6 +15,8 @@ const RootLayout = ({
 }: Readonly<{
   children: ReactNode
 }>) => {
+  const isAuthorized = getAuthorized()
+
   return (
     <html lang="en">
       <body className={roboto.className}>
@@ -26,12 +31,26 @@ const RootLayout = ({
               />
             </NextLink>
             <nav className="ml-auto flex gap-2">
-              <Link href="/cabinet">Cabinet</Link>
+              {isAuthorized ? (
+                <>
+                  <Link href="/cabinet">Cabinet</Link>
+                  {/* TODO: finish logout */}
+                  <Button>Logout</Button>
+                </>
+              ) : (
+                <Link href="/login">Login</Link>
+              )}
             </nav>
           </div>
         </header>
         <main className="h-container container mx-auto flex flex-col p-2">
-          {children}
+          <NotistackProvider
+            maxSnack={3}
+            autoHideDuration={2000}
+            preventDuplicate
+          >
+            {children}
+          </NotistackProvider>
         </main>
         <footer className="bg-slate-700">
           <div className="container mx-auto flex flex-row items-center justify-between gap-2 p-2 text-white">

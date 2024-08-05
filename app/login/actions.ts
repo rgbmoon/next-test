@@ -1,30 +1,40 @@
 'use server'
 
 import { API_URL } from '@/constants/constants'
+import { APIError, formatAPIError } from '@/utils/api'
+
 import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
 
-type Request = { email: string; password: string }
-type Response = { token: string; userId: number }
+type RequestBody = {
+  email: string
+  password: string
+}
 
-export const userLogin = async (input: Request) => {
-  try {
-    const response = await fetch(`${API_URL}/login`, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      method: 'POST',
-      // TODO: send data correctly
-      body: JSON.stringify(input),
-    })
+type ResponseBody = {
+  token: string
+  userId: number
+}
 
-    const parsed: Response = await response.json()
+export const userLogin = async (input: RequestBody) => {
+  const response = await fetch(`${API_URL}/login`, {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    method: 'POST',
+    body: JSON.stringify(input),
+  })
 
-    cookies().set('token', parsed.token, {
-      expires: new Date().getTime() + 3600000, // 6 hours
-    })
-
-    return parsed
-  } catch (error) {
-    throw new Error('Login failed, contact your administrator')
+  if (!response.ok) {
+    const errorBody: APIError = await response.json()
+    throw new Error(formatAPIError(errorBody))
   }
+
+  const responseBody: ResponseBody = await response.json()
+
+  cookies().set('token', responseBody.token, {
+    expires: new Date().getTime() + 3600000, // 6 hours
+  })
+
+  redirect('/cabinet')
 }
