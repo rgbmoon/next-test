@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 }
 
 const LoginLayout = ({ children }: { children: ReactNode }) => {
-  if (cookies().get('token')) {
+  if (cookies().has('token')) {
     redirect('/cabinet')
   }
 

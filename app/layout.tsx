@@ -5,8 +5,7 @@ import { ReactNode } from 'react'
 import { Link } from '@/components/link'
 import NextLink from 'next/link'
 import { NotistackProvider } from '@/components/snackbar-provider'
-import { getAuthorized } from '@/utils/user'
-import { Button } from '@/components/button'
+import { cookies } from 'next/headers'
 
 const roboto = Roboto_Condensed({ subsets: ['latin', 'cyrillic'] })
 
@@ -15,7 +14,7 @@ const RootLayout = ({
 }: Readonly<{
   children: ReactNode
 }>) => {
-  const isAuthorized = getAuthorized()
+  const isAuthorized = cookies().has('token')
 
   return (
     <html lang="en">
@@ -31,11 +30,11 @@ const RootLayout = ({
               />
             </NextLink>
             <nav className="ml-auto flex gap-2">
+              {/* tdigger rerender after cookie expired */}
               {isAuthorized ? (
                 <>
                   <Link href="/cabinet">Cabinet</Link>
-                  {/* TODO: finish logout */}
-                  <Button>Logout</Button>
+                  <Link href="/logout">Logout</Link>
                 </>
               ) : (
                 <Link href="/login">Login</Link>

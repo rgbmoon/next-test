@@ -33,7 +33,7 @@ export const userLogin = async (input: RequestBody) => {
   const responseBody: ResponseBody = await response.json()
 
   cookies().set('token', responseBody.token, {
-    expires: new Date().getTime() + 3600000, // 6 hours
+    maxAge: 3600 * 6, // 6 hours
   })
 
   redirect('/cabinet')
