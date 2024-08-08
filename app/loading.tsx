@@ -1,7 +1,9 @@
+import { LoaderIcon } from '@/components/icons/loader'
+
 const Loading = () => {
   return (
-    <div className="my-auto flex items-center justify-center gap-2 self-center">
-      Loading...
+    <div className="my-auto flex w-full items-center justify-center gap-2 self-center">
+      <LoaderIcon />
     </div>
   )
 }

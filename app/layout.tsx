@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import { Roboto_Condensed } from 'next/font/google'
 import './globals.css'
 import { ReactNode } from 'react'
@@ -7,6 +6,7 @@ import NextLink from 'next/link'
 import { NotistackProvider } from '@/components/providers/snackbar-provider'
 import { cookies } from 'next/headers'
 import { AuthProvider } from '@/components/providers/session-provider'
+import { LogoIcon } from '@/components/icons/logo'
 
 const roboto = Roboto_Condensed({ subsets: ['latin', 'cyrillic'] })
 
@@ -23,12 +23,7 @@ const RootLayout = ({
         <header className="fixed top-0 z-50 h-12 w-full bg-white shadow">
           <div className="container mx-auto flex items-center gap-2 p-2">
             <NextLink href="/">
-              <Image
-                src="/next.svg"
-                alt="Next.js Logo"
-                width={120}
-                height={24}
-              />
+              <LogoIcon width={120} height={24} />
             </NextLink>
             <nav className="ml-auto flex gap-2">
               {isAuthorized ? (

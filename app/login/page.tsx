@@ -5,13 +5,13 @@ import { Input } from '@/components/ui/input'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { userLogin } from './actions'
 import { enqueueSnackbar } from 'notistack'
+import { useState } from 'react'
+import { LoaderIcon } from '@/components/icons/loader'
 
 type FormData = {
   email: string
   password: string
 }
-
-// TODO: make submitting UI/loader, disable submit button while submitting
 
 const Login = () => {
   const {
@@ -20,12 +20,17 @@ const Login = () => {
     formState: { errors },
   } = useForm<FormData>()
 
+  const [isSubmit, setSubmit] = useState(false)
+
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     try {
+      setSubmit(true)
       await userLogin(data)
     } catch (error) {
       // TODO: fix error that brokes variant
       enqueueSnackbar(error as string, { variant: 'error' })
+    } finally {
+      setSubmit(false)
     }
   }
 
@@ -47,7 +52,14 @@ const Login = () => {
         defaultValue="1234"
         {...register('password', { required: true, minLength: 4 })}
       />
-      <Button type="submit">Submit</Button>
+      <Button
+        type="submit"
+        className="flex items-center justify-between gap-2"
+        disabled={isSubmit}
+      >
+        Submit
+        {isSubmit && <LoaderIcon width={22} height={22} />}
+      </Button>
     </form>
   )
 }
