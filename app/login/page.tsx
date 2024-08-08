@@ -1,16 +1,17 @@
 'use client'
 
-import { Button } from '@/components/button'
-import { Input } from '@/components/input'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { userLogin } from './actions'
 import { enqueueSnackbar } from 'notistack'
-import { API_URL } from '@/constants/constants'
 
 type FormData = {
   email: string
   password: string
 }
+
+// TODO: make submitting UI/loader, disable submit button while submitting
 
 const Login = () => {
   const {
@@ -23,6 +24,7 @@ const Login = () => {
     try {
       await userLogin(data)
     } catch (error) {
+      // TODO: fix error that brokes variant
       enqueueSnackbar(error as string, { variant: 'error' })
     }
   }

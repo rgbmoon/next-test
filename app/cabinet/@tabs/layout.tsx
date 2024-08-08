@@ -1,4 +1,4 @@
-import { Tabs } from '@/components/tabs'
+import { Tabs } from '@/components/ui/tabs'
 import { ReactNode } from 'react'
 
 const CabinetTabsLayout = ({ children }: { children: ReactNode }) => {

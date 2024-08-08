@@ -11,9 +11,7 @@ const Home = () => {
 
 // TODO
 // 1) Make user cabinet with hook forms
-// 2) Make auth
-// 3) Make auth middleware for cabinet
-// 4) Make main page with posts
-// 5) Make single post page with dynamic route
+// 2) Make main page with posts
+// 3) Make single post page with dynamic route
 
 export default Home

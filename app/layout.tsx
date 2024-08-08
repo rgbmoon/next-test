@@ -2,10 +2,11 @@ import Image from 'next/image'
 import { Roboto_Condensed } from 'next/font/google'
 import './globals.css'
 import { ReactNode } from 'react'
-import { Link } from '@/components/link'
+import { Link } from '@/components/ui/link'
 import NextLink from 'next/link'
-import { NotistackProvider } from '@/components/snackbar-provider'
+import { NotistackProvider } from '@/components/providers/snackbar-provider'
 import { cookies } from 'next/headers'
+import { AuthProvider } from '@/components/providers/session-provider'
 
 const roboto = Roboto_Condensed({ subsets: ['latin', 'cyrillic'] })
 
@@ -30,7 +31,6 @@ const RootLayout = ({
               />
             </NextLink>
             <nav className="ml-auto flex gap-2">
-              {/* tdigger rerender after cookie expired */}
               {isAuthorized ? (
                 <>
                   <Link href="/cabinet">Cabinet</Link>
@@ -48,11 +48,11 @@ const RootLayout = ({
             autoHideDuration={2000}
             preventDuplicate
           >
-            {children}
+            <AuthProvider>{children}</AuthProvider>
           </NotistackProvider>
         </main>
         <footer className="bg-slate-700">
-          <div className="container mx-auto flex flex-row items-center justify-between gap-2 p-2 text-white">
+          <div className="container mx-auto flex h-12 flex-row items-center justify-between gap-2 p-2 text-white">
             <div className="text-sm">
               Made with love by{' '}
               <NextLink
