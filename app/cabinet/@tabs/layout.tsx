@@ -1,5 +1,11 @@
 import { Tabs } from '@/components/ui/tabs'
+import { Metadata } from 'next'
 import { ReactNode } from 'react'
+
+export const metadata: Metadata = {
+  title: 'Cabinet page title',
+  description: 'Cabinet page description',
+}
 
 const CabinetTabsLayout = ({ children }: { children: ReactNode }) => {
   return (
@@ -14,7 +20,7 @@ const CabinetTabsLayout = ({ children }: { children: ReactNode }) => {
           ]}
         />
       </div>
-      <div className="flex grow rounded-lg border border-solid border-slate-100 p-2 shadow">
+      <div className="flex max-w-screen-md grow rounded-lg border border-solid border-slate-100 p-2 shadow">
         {children}
       </div>
     </div>
