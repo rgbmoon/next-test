@@ -7,6 +7,7 @@ import { userLogin } from './actions'
 import { enqueueSnackbar } from 'notistack'
 import { useState } from 'react'
 import { LoaderIcon } from '@/components/icons/loader'
+import { PasswordInput } from '@/components/ui/password-input'
 
 type FormData = {
   email: string
@@ -27,12 +28,23 @@ const Login = () => {
       setSubmit(true)
       await userLogin(data)
     } catch (error) {
-      // TODO: fix error that brokes variant
-      enqueueSnackbar(error as string, { variant: 'error' })
+      if (error instanceof Error) {
+        enqueueSnackbar(error.message, { variant: 'error' })
+      }
     } finally {
       setSubmit(false)
     }
   }
+
+  const { ref: emailRef, ...emailFild } = register('email', {
+    required: true,
+    minLength: 4,
+  })
+
+  const { ref: passwordRef, ...passwordField } = register('password', {
+    required: true,
+    minLength: 4,
+  })
 
   return (
     <form
@@ -44,22 +56,22 @@ const Login = () => {
         label="Login"
         errors={errors}
         defaultValue="vlad@mail.ru"
-        {...register('email', { required: true, minLength: 4 })}
+        inputRef={emailRef}
+        {...emailFild}
       />
-      <Input
+      <PasswordInput
         label="Password"
         errors={errors}
         defaultValue="1234"
-        {...register('password', { required: true, minLength: 4 })}
+        inputRef={passwordRef}
+        {...passwordField}
       />
-      <Button
-        type="submit"
-        className="flex items-center justify-between gap-2"
-        disabled={isSubmit}
-      >
-        Submit
-        {isSubmit && <LoaderIcon width={22} height={22} />}
-      </Button>
+      <div className="flex items-center gap-2">
+        <Button type="submit" disabled={isSubmit}>
+          Submit
+        </Button>
+        {isSubmit && <LoaderIcon width={24} height={24} />}
+      </div>
     </form>
   )
 }
