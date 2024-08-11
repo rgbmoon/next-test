@@ -3,17 +3,14 @@
 import { LoaderIcon } from '@/components/icons/loader'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { userUpdate } from '@/lib/api-user'
+import { UserUpdateRequest } from '@/types/api'
 import { enqueueSnackbar } from 'notistack'
 import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import Cookies from 'js-cookie'
 
-type FormData = {
-  email?: string
-  password?: string
-  isAdmin?: boolean
-  firstName?: string
-  lastName?: string
-}
+type FormData = Omit<UserUpdateRequest, 'userId'>
 
 const CabinetTabProfile = () => {
   const {
@@ -22,12 +19,16 @@ const CabinetTabProfile = () => {
     formState: { errors },
   } = useForm<FormData>()
 
+  // TODO userGet - fill form with deafult values
+
   const [isSubmit, setSubmit] = useState(false)
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
+    const userId = Number(Cookies.get('userId'))
+
     try {
       setSubmit(true)
-      // TODO await userLogin(data) make action
+      await userUpdate({ userId, ...data })
     } catch (error) {
       if (error instanceof Error) {
         enqueueSnackbar(error.message, { variant: 'error' })
@@ -56,8 +57,8 @@ const CabinetTabProfile = () => {
       className="flex w-full flex-col gap-4"
       onSubmit={handleSubmit(onSubmit)}
     >
-      <div className="flex gap-2 max-md:flex-col">
-        <div className="flex grow flex-col gap-4">
+      <div className="flex flex-col gap-4 max-md:flex-col">
+        <div className="flex gap-2">
           <Input
             label="Email"
             errors={errors}
@@ -71,7 +72,7 @@ const CabinetTabProfile = () => {
             {...passwordFild}
           />
         </div>
-        <div className="flex grow flex-col gap-4">
+        <div className="flex gap-2">
           <Input
             label="First Name"
             errors={errors}

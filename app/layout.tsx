@@ -28,6 +28,7 @@ const RootLayout = ({
             <nav className="ml-auto flex gap-2">
               {isAuthorized ? (
                 <>
+                  {/* add user info and sync with cabinet user info form updates */}
                   <Link href="/cabinet">Cabinet</Link>
                   <Link href="/logout">Logout</Link>
                 </>

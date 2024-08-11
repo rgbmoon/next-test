@@ -3,16 +3,14 @@
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { userLogin } from './actions'
 import { enqueueSnackbar } from 'notistack'
 import { useState } from 'react'
 import { LoaderIcon } from '@/components/icons/loader'
 import { PasswordInput } from '@/components/ui/password-input'
+import { LoginRequest } from '@/types/api'
+import { login } from '@/lib/api-session'
 
-type FormData = {
-  email: string
-  password: string
-}
+type FormData = LoginRequest
 
 const Login = () => {
   const {
@@ -26,7 +24,7 @@ const Login = () => {
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     try {
       setSubmit(true)
-      await userLogin(data)
+      await login(data)
     } catch (error) {
       if (error instanceof Error) {
         enqueueSnackbar(error.message, { variant: 'error' })
