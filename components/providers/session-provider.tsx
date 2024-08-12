@@ -8,6 +8,8 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
   const router = useRouter()
   const [isUIRefreshed, setUIRefreshed] = useState(false)
 
+  // TODO: make refreshSession method and token, remove setInterval
+
   useEffect(() => {
     const authCheckInterval = setInterval(() => {
       // When we can't get the token cookie, that means user was logged out or session was expired
