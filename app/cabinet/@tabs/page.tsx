@@ -3,32 +3,54 @@
 import { LoaderIcon } from '@/components/icons/loader'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { userUpdate } from '@/lib/api-user'
+import { userGet, userUpdate } from '@/lib/api-user'
 import { UserUpdateRequest } from '@/types/api'
 import { enqueueSnackbar } from 'notistack'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import Cookies from 'js-cookie'
+import { getDirtyValues } from '@/utils/form'
 
 type FormData = Omit<UserUpdateRequest, 'userId'>
 
 const CabinetTabProfile = () => {
+  const [isSubmit, setSubmit] = useState(false)
+  const [isLoading, setLoading] = useState(false)
+  const userId = Number(Cookies.get('userId'))
+
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, dirtyFields },
+    reset,
   } = useForm<FormData>()
 
-  // TODO userGet - fill form with deafult values
+  useEffect(() => {
+    const userId = Number(Cookies.get('userId'))
+    setLoading(true)
 
-  const [isSubmit, setSubmit] = useState(false)
+    userGet({ userId })
+      .then((response) => {
+        reset(response)
+      })
+      .catch((error) => {
+        if (error instanceof Error) {
+          enqueueSnackbar(error.message, { variant: 'error' })
+        }
+      })
+      .finally(() => {
+        setLoading(false)
+      })
+  }, [reset])
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
-    const userId = Number(Cookies.get('userId'))
-
     try {
       setSubmit(true)
-      await userUpdate({ userId, ...data })
+
+      const filteredFields = getDirtyValues(dirtyFields, data)
+
+      await userUpdate({ userId, ...filteredFields })
+      enqueueSnackbar('User updated', { variant: 'success' })
     } catch (error) {
       if (error instanceof Error) {
         enqueueSnackbar(error.message, { variant: 'error' })
@@ -52,6 +74,14 @@ const CabinetTabProfile = () => {
   })
   const { ref: isAdminRef, ...isAdminFild } = register('isAdmin')
 
+  if (isLoading) {
+    return (
+      <div className="my-auto flex w-full items-center justify-center gap-2 self-center">
+        <LoaderIcon />
+      </div>
+    )
+  }
+
   return (
     <form
       className="flex w-full flex-col gap-4"
@@ -66,7 +96,7 @@ const CabinetTabProfile = () => {
             {...emailFild}
           />
           <Input
-            label="Password"
+            label="New password"
             errors={errors}
             inputRef={passwordRef}
             {...passwordFild}
