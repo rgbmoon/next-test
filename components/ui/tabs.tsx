@@ -5,6 +5,7 @@ type Props = {
   content: Array<{
     href: string
     label: string
+    hidden?: boolean
   }>
   className?: string
 }
@@ -14,11 +15,14 @@ export const Tabs: FC<Props> = ({ content, className }) => {
     <div
       className={`flex min-w-48 flex-col gap-2 rounded-lg border border-solid border-slate-100 p-2 align-middle shadow ${className}`}
     >
-      {content.map(({ href, label }) => (
-        <Link key={href} href={href}>
-          {label}
-        </Link>
-      ))}
+      {content.map(
+        ({ href, label, hidden }) =>
+          !hidden && (
+            <Link key={href} href={href}>
+              {label}
+            </Link>
+          )
+      )}
     </div>
   )
 }

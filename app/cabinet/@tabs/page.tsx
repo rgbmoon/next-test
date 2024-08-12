@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import Cookies from 'js-cookie'
 import { getDirtyValues } from '@/utils/form'
+import { useRouter } from 'next/navigation'
 
 type FormData = Omit<UserUpdateRequest, 'userId'>
 
@@ -17,6 +18,7 @@ const CabinetTabProfile = () => {
   const [isSubmit, setSubmit] = useState(false)
   const [isLoading, setLoading] = useState(false)
   const userId = Number(Cookies.get('userId'))
+  const router = useRouter()
 
   const {
     register,
@@ -50,6 +52,8 @@ const CabinetTabProfile = () => {
       const filteredFields = getDirtyValues(dirtyFields, data)
 
       await userUpdate({ userId, ...filteredFields })
+
+      router.refresh()
       enqueueSnackbar('User updated', { variant: 'success' })
     } catch (error) {
       if (error instanceof Error) {

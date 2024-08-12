@@ -1,5 +1,7 @@
 import { Tabs } from '@/components/ui/tabs'
+import { userGet } from '@/lib/api-user'
 import { Metadata } from 'next'
+import { cookies } from 'next/headers'
 import { ReactNode } from 'react'
 
 export const metadata: Metadata = {
@@ -7,7 +9,10 @@ export const metadata: Metadata = {
   description: 'Cabinet page description',
 }
 
-const CabinetTabsLayout = ({ children }: { children: ReactNode }) => {
+const CabinetTabsLayout = async ({ children }: { children: ReactNode }) => {
+  const userId = cookies().get('userId')?.value
+  const user = await userGet({ userId: Number(userId) })
+
   return (
     <div className="flex gap-2 max-md:flex-col">
       <div className="top-14">
@@ -15,7 +20,7 @@ const CabinetTabsLayout = ({ children }: { children: ReactNode }) => {
           className="sticky top-14"
           content={[
             { href: '/cabinet', label: 'Edit profile' },
-            { href: '/cabinet/users', label: 'Users' },
+            { href: '/cabinet/users', label: 'Users', hidden: !user.isAdmin },
             { href: '/cabinet/posts', label: 'Posts' },
           ]}
         />
