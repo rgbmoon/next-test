@@ -1,4 +1,4 @@
-import { userGet, usersGet } from '@/lib/api-user'
+import { userGet, userGetAll } from '@/lib/api-user'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 
@@ -10,7 +10,7 @@ const CabinetTabUsers = async () => {
   if (!user.isAdmin) redirect('/cabinet')
 
   // TODO: make ASC/DESC sort by createdAt/updatedAt, pagination, search
-  const users = await usersGet()
+  const users = await userGetAll()
 
   return (
     <div className="">
