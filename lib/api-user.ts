@@ -4,6 +4,8 @@ import { API_URL } from '@/constants/constants'
 import {
   UserGetRequest,
   UserGetResponse,
+  UsersGetAllRequest,
+  UsersGetAllResponse,
   UserUpdateRequest,
   UserUpdateResponse,
 } from '@/types/api'
@@ -38,6 +40,25 @@ export const userGet = async ({
       'Content-Type': 'application/json',
     },
     method: 'GET',
+  })
+
+  if (!response.ok) {
+    const errorBody: APIError = await response.json()
+    throw new Error(formatAPIError(errorBody))
+  }
+
+  return response.json()
+}
+
+export const userGetAll = async (
+  params?: UsersGetAllRequest
+): Promise<UsersGetAllResponse> => {
+  const response = await fetchWithAuth(`${API_URL}/users`, {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    method: 'GET',
+    body: JSON.stringify(params),
   })
 
   if (!response.ok) {

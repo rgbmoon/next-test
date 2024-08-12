@@ -1,3 +1,10 @@
+// Shared
+
+type Sort = {
+  createdAt?: 'ASC' | 'DESC'
+  updatedAt?: 'ASC' | 'DESC'
+}
+
 // Session
 
 export type LoginRequest = {
@@ -23,11 +30,17 @@ export type User = {
 }
 
 export type UserGetRequest = Pick<User, 'userId'>
-
 export type UserGetResponse = User
+
+export type UsersGetAllRequest = {
+  sort: Sort
+  search?: string
+  limit?: number
+  offset?: number
+}
+export type UsersGetAllResponse = User[]
 
 export type UserUpdateRequest = Partial<
   Omit<User, 'createdAt' | 'updatedAt'> & { password: string }
 >
-
 export type UserUpdateResponse = User
