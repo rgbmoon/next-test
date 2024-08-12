@@ -10,10 +10,10 @@ const Home = () => {
 }
 
 // TODO
-// 1) Make user cabinet with hook forms - two variants: for admin and common user
-// admin can edit another users and their posts, common user can edit his posts and user info
-// 2) Make main page with posts
-// 4) make post constructor with different content types
-// 5) Make single post page with dynamic route
+// 1) Make users edit tab
+// 2) make post constructor with different content types
+// Admin can edit every post, common user can edit only his own posts
+// 3) Make main page with posts
+// 4) Make single post page with dynamic route
 
 export default Home

@@ -1,24 +1,25 @@
 import { userGet, userGetAll } from '@/lib/api-user'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
+import { UserCard } from '../../_components/user-card'
 
 const CabinetTabUsers = async () => {
   const userId = cookies().get('userId')?.value
 
   const user = await userGet({ userId: Number(userId) })
 
-  if (!user.isAdmin) redirect('/cabinet')
+  if (!user.isAdmin) {
+    redirect('/cabinet')
+  }
 
-  // TODO: make ASC/DESC sort by createdAt/updatedAt, pagination, search
   const users = await userGetAll()
 
+  // TODO: make user edit modal form
+
   return (
-    <div className="">
+    <div className="grid w-full grid-flow-row grid-cols-3 gap-2 max-md:grid-cols-2 max-sm:grid-cols-1">
       {users.map((user) => (
-        // TODO: make user card
-        <div key={user.userId} className="">
-          {user.email}
-        </div>
+        <UserCard key={user.userId} {...user} />
       ))}
     </div>
   )
