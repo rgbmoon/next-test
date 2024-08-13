@@ -14,7 +14,7 @@ const CabinetTabUsers = async () => {
 
   const users = await userGetAll()
 
-  // TODO: make user edit modal form
+  // TODO: make add user button, that opens user create modal
 
   return (
     <div className="grid w-full grid-flow-row grid-cols-3 gap-2 max-md:grid-cols-2 max-sm:grid-cols-1">

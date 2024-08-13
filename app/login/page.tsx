@@ -46,7 +46,7 @@ const Login = () => {
 
   return (
     <form
-      className="m-auto flex w-96 flex-col gap-4 rounded-lg border border-solid border-slate-100 p-3 shadow max-md:w-full"
+      className="m-auto flex w-96 flex-col gap-4 rounded-lg border border-solid border-slate-100 p-3 shadow-lg max-md:w-full"
       onSubmit={handleSubmit(onSubmit)}
     >
       <Input
