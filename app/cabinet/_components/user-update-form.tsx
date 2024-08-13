@@ -2,6 +2,7 @@
 
 import { LoaderIcon } from '@/components/icons/loader'
 import { Button } from '@/components/ui/button'
+import { Checkbox } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
 import { userUpdate } from '@/lib/api-user'
 import { UserUpdateRequest, UserUpdateResponse } from '@/types/api'
@@ -15,9 +16,10 @@ type FormData = Omit<UserUpdateRequest, 'userId'>
 
 type Props = {
   defaultValues: UserUpdateResponse
+  isAdmin: boolean
 }
 
-export const ProfileUpdateForm: FC<Props> = ({ defaultValues }) => {
+export const UserUpdateForm: FC<Props> = ({ defaultValues, isAdmin }) => {
   const router = useRouter()
   const [isSubmit, setSubmit] = useState(false)
 
@@ -58,6 +60,7 @@ export const ProfileUpdateForm: FC<Props> = ({ defaultValues }) => {
   const { ref: lastNameRef, ...lastNameFild } = register('lastName', {
     minLength: 1,
   })
+  const { ref: isAdminRef, ...isAdminFild } = register('isAdmin')
 
   return (
     <form
@@ -94,6 +97,13 @@ export const ProfileUpdateForm: FC<Props> = ({ defaultValues }) => {
           />
         </div>
       </div>
+      {isAdmin && (
+        <Checkbox
+          label="Is user admin?"
+          inputRef={isAdminRef}
+          {...isAdminFild}
+        />
+      )}
       <div className="flex items-center gap-2">
         <Button type="submit" disabled={isSubmit}>
           Submit
