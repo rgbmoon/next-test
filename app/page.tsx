@@ -10,10 +10,9 @@ const Home = () => {
 }
 
 // TODO
-// 1) Make users edit tab
-// 2) make post constructor with different content types
+// 1) make post constructor with different content types
 // Admin can edit every post, common user can edit only his own posts
-// 3) Make main page with posts
-// 4) Make single post page with dynamic route
+// 2) Make main page with posts
+// 3) Make single post page with dynamic route
 
 export default Home

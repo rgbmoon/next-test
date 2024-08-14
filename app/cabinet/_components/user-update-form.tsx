@@ -15,7 +15,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 type FormData = Omit<UserUpdateRequest, 'userId'>
 
 type Props = {
-  defaultValues: UserUpdateResponse
+  defaultValues?: UserUpdateResponse
   isAdmin: boolean
 }
 
@@ -35,7 +35,7 @@ export const UserUpdateForm: FC<Props> = ({ defaultValues, isAdmin }) => {
 
       const filteredFields = getDirtyValues(dirtyFields, data)
 
-      await userUpdate({ userId: defaultValues.userId, ...filteredFields })
+      await userUpdate({ userId: defaultValues?.userId, ...filteredFields })
 
       router.refresh()
       enqueueSnackbar('User updated', { variant: 'success' })
