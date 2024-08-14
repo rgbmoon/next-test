@@ -5,41 +5,38 @@ import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
 import { PasswordInput } from '@/components/ui/password-input'
-import { userUpdate } from '@/lib/api-user'
-import { User, UserUpdateRequest } from '@/types/api'
-import { getDirtyValues } from '@/utils/form'
+import { userCreate } from '@/lib/api-user'
+import { UserCreateRequest } from '@/types/api'
 import { useRouter } from 'next/navigation'
 import { enqueueSnackbar } from 'notistack'
 import { FC, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-type FormData = Omit<UserUpdateRequest, 'userId'>
-
-type Props = {
-  defaultValues: User
-  isAdmin: boolean
+type FormData = UserCreateRequest & {
+  confirmPassword: string
 }
 
-export const UserUpdateForm: FC<Props> = ({ defaultValues, isAdmin }) => {
+export const UserCreateForm: FC = () => {
   const router = useRouter()
   const [isSubmit, setSubmit] = useState(false)
 
   const {
     register,
     handleSubmit,
-    formState: { errors, dirtyFields },
-  } = useForm<FormData>({ defaultValues })
+    getValues,
+    formState: { errors },
+  } = useForm<FormData>()
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     try {
       setSubmit(true)
 
-      const filteredFields = getDirtyValues(dirtyFields, data)
+      const { confirmPassword, ...inputData } = data
 
-      await userUpdate({ userId: defaultValues.userId, ...filteredFields })
+      await userCreate(inputData)
 
+      enqueueSnackbar('User created', { variant: 'success' })
       router.refresh()
-      enqueueSnackbar('User updated', { variant: 'success' })
     } catch (error) {
       if (error instanceof Error) {
         enqueueSnackbar(error.message, { variant: 'error' })
@@ -50,15 +47,28 @@ export const UserUpdateForm: FC<Props> = ({ defaultValues, isAdmin }) => {
   }
 
   const { ref: emailRef, ...emailFild } = register('email', {
+    required: true,
     minLength: 4,
   })
   const { ref: passwordRef, ...passwordFild } = register('password', {
+    required: true,
     minLength: 4,
   })
+  const { ref: confirmPasswordRef, ...confirmPasswordFild } = register(
+    'confirmPassword',
+    {
+      required: true,
+      minLength: 4,
+      validate: (value) =>
+        value === getValues('password') || 'Password doesn`t matched',
+    }
+  )
   const { ref: firstNameRef, ...firstNameFild } = register('firstName', {
+    required: true,
     minLength: 1,
   })
   const { ref: lastNameRef, ...lastNameFild } = register('lastName', {
+    required: true,
     minLength: 1,
   })
   const { ref: isAdminRef, ...isAdminFild } = register('isAdmin')
@@ -69,18 +79,24 @@ export const UserUpdateForm: FC<Props> = ({ defaultValues, isAdmin }) => {
       onSubmit={handleSubmit(onSubmit)}
     >
       <div className="flex flex-col gap-4 max-md:flex-col">
+        <Input
+          label="Email"
+          errors={errors}
+          inputRef={emailRef}
+          {...emailFild}
+        />
         <div className="flex gap-2">
-          <Input
-            label="Email"
-            errors={errors}
-            inputRef={emailRef}
-            {...emailFild}
-          />
           <PasswordInput
-            label="New password"
+            label="Password"
             errors={errors}
             inputRef={passwordRef}
             {...passwordFild}
+          />
+          <PasswordInput
+            label="Confirm Password"
+            errors={errors}
+            inputRef={confirmPasswordRef}
+            {...confirmPasswordFild}
           />
         </div>
         <div className="flex gap-2">
@@ -98,13 +114,7 @@ export const UserUpdateForm: FC<Props> = ({ defaultValues, isAdmin }) => {
           />
         </div>
       </div>
-      {isAdmin && (
-        <Checkbox
-          label="Is user admin?"
-          inputRef={isAdminRef}
-          {...isAdminFild}
-        />
-      )}
+      <Checkbox label="Is user admin?" inputRef={isAdminRef} {...isAdminFild} />
       <div className="flex items-center gap-2">
         <Button type="submit" disabled={isSubmit}>
           Submit

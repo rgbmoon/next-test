@@ -1,6 +1,6 @@
 import { LoaderIcon } from '@/components/icons/loader'
 
-const CabinetTabUsersUpdateModalLoading = () => {
+const CabinetTabUsersCreateModalLoading = () => {
   return (
     <div className="flex h-48 w-full items-center justify-center">
       <LoaderIcon />
@@ -8,4 +8,4 @@ const CabinetTabUsersUpdateModalLoading = () => {
   )
 }
 
-export default CabinetTabUsersUpdateModalLoading
+export default CabinetTabUsersCreateModalLoading

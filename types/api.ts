@@ -40,7 +40,15 @@ export type UsersGetAllRequest = {
 }
 export type UsersGetAllResponse = User[]
 
-export type UserUpdateRequest = Partial<
-  Omit<User, 'createdAt' | 'updatedAt'> & { password: string }
->
+export type UserCreateRequest = {
+  email: string
+  password: string
+  isAdmin: boolean
+  firstName: string
+  lastName: string
+}
+export type UserCreateResponse = User
+
+export type UserUpdateRequest = Partial<UserCreateRequest> &
+  Pick<User, 'userId'>
 export type UserUpdateResponse = User

@@ -1,7 +1,7 @@
 import { Modal } from '@/components/ui/modal'
 import { ReactNode } from 'react'
 
-const CabinetTabUsersUpdateModalLayout = ({
+const CabinetTabUsersCreateModalLayout = ({
   children,
 }: {
   children: ReactNode
@@ -9,4 +9,4 @@ const CabinetTabUsersUpdateModalLayout = ({
   return <Modal>{children}</Modal>
 }
 
-export default CabinetTabUsersUpdateModalLayout
+export default CabinetTabUsersCreateModalLayout

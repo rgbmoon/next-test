@@ -2,7 +2,7 @@ import { UserUpdateForm } from '@/app/cabinet/_components/user-update-form'
 import { userGet } from '@/lib/api-user'
 import { cookies } from 'next/headers'
 
-const CabinetTabUsersModal = async ({
+const CabinetTabUsersUpdateModal = async ({
   params: { id: userToEditid },
 }: {
   params: { id: string }
@@ -15,4 +15,4 @@ const CabinetTabUsersModal = async ({
   return <UserUpdateForm defaultValues={userToEdit} isAdmin={user.isAdmin} />
 }
 
-export default CabinetTabUsersModal
+export default CabinetTabUsersUpdateModal

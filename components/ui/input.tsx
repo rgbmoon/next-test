@@ -41,6 +41,11 @@ export const Input: FC<InputProps> = ({
           This field requires more characters
         </span>
       )}
+      {error?.type === 'validate' && (
+        <span className="text-xs text-red-600">
+          {error.message?.toString()}
+        </span>
+      )}
     </label>
   )
 }

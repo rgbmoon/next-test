@@ -2,6 +2,8 @@
 
 import { API_URL } from '@/constants/constants'
 import {
+  UserCreateRequest,
+  UserCreateResponse,
   UserGetRequest,
   UserGetResponse,
   UsersGetAllRequest,
@@ -10,6 +12,25 @@ import {
   UserUpdateResponse,
 } from '@/types/api'
 import { APIError, fetchWithAuth, formatAPIError } from '@/utils/api'
+
+export const userCreate = async (
+  input: UserCreateRequest
+): Promise<UserCreateResponse> => {
+  const response = await fetchWithAuth(`${API_URL}/users`, {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    method: 'POST',
+    body: JSON.stringify(input),
+  })
+
+  if (!response.ok) {
+    const errorBody: APIError = await response.json()
+    throw new Error(formatAPIError(errorBody))
+  }
+
+  return response.json()
+}
 
 export const userUpdate = async (
   input: UserUpdateRequest
