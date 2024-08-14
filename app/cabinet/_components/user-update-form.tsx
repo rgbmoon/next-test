@@ -20,6 +20,8 @@ type Props = {
   isAdmin: boolean
 }
 
+//  TODO: add user delete button with confirmation modal
+
 export const UserUpdateForm: FC<Props> = ({ defaultValues, isAdmin }) => {
   const router = useRouter()
   const [isSubmit, setSubmit] = useState(false)

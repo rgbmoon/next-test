@@ -15,8 +15,6 @@ const CabinetTabUsers = async () => {
 
   const users = await userGetAll()
 
-  // TODO: make add user button, that opens user create modal
-
   return (
     <div className="flex w-full flex-col gap-2">
       <div className="flex justify-end">
