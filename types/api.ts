@@ -52,3 +52,8 @@ export type UserCreateResponse = User
 export type UserUpdateRequest = Partial<UserCreateRequest> &
   Pick<User, 'userId'>
 export type UserUpdateResponse = User
+
+export type UserDeleteRequest = Pick<User, 'userId'>
+export type UserDeleteResponse = {
+  message: string
+}

@@ -4,6 +4,8 @@ import { API_URL } from '@/constants/constants'
 import {
   UserCreateRequest,
   UserCreateResponse,
+  UserDeleteRequest,
+  UserDeleteResponse,
   UserGetRequest,
   UserGetResponse,
   UsersGetAllRequest,
@@ -80,6 +82,24 @@ export const userGetAll = async (
     },
     method: 'GET',
     body: JSON.stringify(params),
+  })
+
+  if (!response.ok) {
+    const errorBody: APIError = await response.json()
+    throw new Error(formatAPIError(errorBody))
+  }
+
+  return response.json()
+}
+
+export const userDelete = async ({
+  userId,
+}: UserDeleteRequest): Promise<UserDeleteResponse> => {
+  const response = await fetchWithAuth(`${API_URL}/users/${userId}`, {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    method: 'DELETE',
   })
 
   if (!response.ok) {

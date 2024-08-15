@@ -8,7 +8,7 @@ import { createPortal } from 'react-dom'
 export const Modal: FC<PropsWithChildren> = ({ children }) => {
   const router = useRouter()
 
-  // this workaround needed to prevent body scroll when the modal is rendered
+  // this workaround used to prevent body scroll when the modal is rendered
   useEffect(() => {
     document.body.classList.add('overflow-hidden', 'h-auto')
 
