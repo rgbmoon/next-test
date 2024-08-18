@@ -1,8 +1,19 @@
 // Shared
 
-type Sort = {
+type BaseSort = {
   createdAt?: 'ASC' | 'DESC'
   updatedAt?: 'ASC' | 'DESC'
+}
+
+type BaseFilters = {
+  createdAt?: {
+    from?: Date
+    to?: Date
+  }
+  updatedAt?: {
+    from?: Date
+    to?: Date
+  }
 }
 
 // Session
@@ -33,7 +44,7 @@ export type UserGetRequest = Pick<User, 'userId'>
 export type UserGetResponse = User
 
 export type UsersGetAllRequest = {
-  sort: Sort
+  sort: BaseSort
   search?: string
   limit?: number
   offset?: number
@@ -55,5 +66,53 @@ export type UserUpdateResponse = User
 
 export type UserDeleteRequest = Pick<User, 'userId'>
 export type UserDeleteResponse = {
+  message: string
+}
+
+// Post
+
+export type Post = {
+  id: number
+  userId: number
+  title: string
+  description: string
+  blocks: Array<{
+    type: 'paragraph' | 'qoute'
+    order: number
+    content: string
+  }>
+  createdAt: Date
+  updatedAt: Date
+}
+
+export type PostsGetRequest = {
+  sort: BaseSort
+  search?: string
+  filters: BaseFilters & {
+    id?: number
+    userId?: number
+  }
+  limit?: number
+  offset?: number
+}
+export type PostsGetResponse = Post[]
+
+export type PostsCreateRequest = {
+  userId: number
+  title: string
+  description: string
+  blocks: Array<{
+    type: 'paragraph' | 'qoute'
+    order: number
+    content: string
+  }>
+}
+export type PostsCreateResponse = Post
+
+export type PostsUpdateRequest = Partial<PostsCreateRequest> & Pick<Post, 'id'>
+export type PostsUpdateResponse = Post
+
+export type PostsDeleteRequest = Pick<Post, 'id'>
+export type PostsDeleteResponse = {
   message: string
 }
