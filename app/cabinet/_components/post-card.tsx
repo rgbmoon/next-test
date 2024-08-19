@@ -21,7 +21,7 @@ export const PostCard: FC<Props> = ({
 }) => {
   return (
     <NextLink
-      href={`/cabinet/users/${id}`}
+      href={`/cabinet/posts/${id}`}
       className={`${className ?? ''} ease flex h-32 cursor-pointer flex-col gap-1 rounded border border-solid border-slate-300 p-2 transition-all hover:border-sky-600 hover:shadow-lg`}
     >
       <h3 className="overflow-hidden text-ellipsis text-nowrap text-lg">

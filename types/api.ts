@@ -87,9 +87,9 @@ export type Post = {
 }
 
 export type PostsGetRequest = {
-  sort: BaseSort
+  sort?: BaseSort
   search?: string
-  filters: BaseFilters & {
+  filters?: BaseFilters & {
     id?: number
     userId?: number
   }

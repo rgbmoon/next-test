@@ -1,7 +1,7 @@
-import { UserCreateForm } from '@/app/cabinet/_components/user-create-form'
+import { PostCreateForm } from '@/app/cabinet/_components/post-create-form'
 
 const CabinetTabPostsCreateModal = async () => {
-  return <UserCreateForm />
+  return <PostCreateForm />
 }
 
 export default CabinetTabPostsCreateModal

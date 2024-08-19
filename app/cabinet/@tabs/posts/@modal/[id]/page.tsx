@@ -1,14 +1,17 @@
-import { UserUpdateForm } from '@/app/cabinet/_components/user-update-form'
-import { userGet } from '@/lib/api-user'
+import { PostUpdateForm } from '@/app/cabinet/_components/post-update-form'
+import { postsGet } from '@/lib/api-post'
 
 const CabinetTabPostsUpdateModal = async ({
-  params: { id: userId },
+  params: { id },
 }: {
   params: { id: string }
 }) => {
-  const user = await userGet({ userId: Number(userId) })
+  // TODO: fix query error
+  const posts = await postsGet({
+    filters: { id: Number(id) },
+  })
 
-  return <UserUpdateForm defaultValues={user} />
+  return <PostUpdateForm defaultValues={posts[0]} />
 }
 
 export default CabinetTabPostsUpdateModal
