@@ -1,8 +1,9 @@
 'use client'
 
-import { Post, User } from '@/types/api'
+import { Post } from '@/types/api'
 import { FC } from 'react'
 import NextLink from 'next/link'
+import { format } from 'date-fns'
 
 type Props = Post & {
   isAdmin: boolean
@@ -13,6 +14,8 @@ export const PostCard: FC<Props> = ({
   id,
   title,
   description,
+  createdAt,
+  creator,
   className,
   isAdmin,
 }) => {
@@ -24,16 +27,21 @@ export const PostCard: FC<Props> = ({
       <h3 className="overflow-hidden text-ellipsis text-nowrap text-lg">
         {title}
       </h3>
-      <div className="overflow-hidden text-ellipsis text-nowrap text-slate-600">
-        {description}
-      </div>
-      {/* TODO: add creator info after BE implementation */}
-      {/* {isAdmin && (
+      {description && (
+        <div className="overflow-hidden text-ellipsis text-nowrap text-slate-600">
+          {description}
+        </div>
+      )}
+      {isAdmin && (
         <div className="overflow-hidden text-ellipsis text-nowrap text-sm text-slate-400">
           <span className="text-sky-800">creator: </span>
-          {user.email}
+          {creator.email}
         </div>
-      )} */}
+      )}
+      <div className="overflow-hidden text-ellipsis text-nowrap text-sm text-slate-400">
+        <span className="text-sky-800">created at: </span>
+        {format(createdAt, 'PPPP')}
+      </div>
     </NextLink>
   )
 }

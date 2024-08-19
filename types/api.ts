@@ -81,6 +81,7 @@ export type Post = {
     order: number
     content: string
   }>
+  creator: Pick<User, 'email' | 'firstName' | 'lastName'>
   createdAt: Date
   updatedAt: Date
 }
@@ -107,10 +108,10 @@ export type PostsCreateRequest = {
     content: string
   }>
 }
-export type PostsCreateResponse = Post
+export type PostsCreateResponse = Omit<Post, 'creator'>
 
 export type PostsUpdateRequest = Partial<PostsCreateRequest> & Pick<Post, 'id'>
-export type PostsUpdateResponse = Post
+export type PostsUpdateResponse = Omit<Post, 'creator'>
 
 export type PostsDeleteRequest = Pick<Post, 'id'>
 export type PostsDeleteResponse = {
